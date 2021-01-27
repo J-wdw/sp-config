@@ -1,0 +1,26 @@
+#服务的名称
+spring:
+  application:   #商品模块
+    name: item-service  #服务名称
+  cloud:
+    config:
+      override-none: true  #设置禁止配置中心的配置将客户端配置覆盖掉
+    
+    
+ # mvc:
+  #  hiddenmethod:
+   #   filter:
+    #    enabled: true
+
+#服务端口号    
+server:
+  port: 8001  #端口号
+ 
+#eureak服务(注册中心 
+eureka:
+  client:     #客户端
+    service-url:    #服务地址
+        defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka            #这个地址只能有云服务商提供,除了在本机的就写在本机
+  
+  
+#spring.mvc.hiddenmethod.filter.enabled=true

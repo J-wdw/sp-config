@@ -1,0 +1,61 @@
+
+spring:
+  application: #消费者模块
+    name: zuul #服务名称
+  cloud:
+    config:
+      override-none: true  #设置禁止配置中心的配置将客户端配置覆盖掉
+
+server:
+  port: 3001 #端口号
+  
+ #eureak服务(注册中心) 
+eureka:
+  client:   #客户端
+    service-url: #服务地址
+     defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka  #这个地址只能有云服务商提供,除了在本机的就写在本机 
+
+
+#zuul网关(相当于nginx)
+zuul:
+  routes:
+    item-service: /item-service/**  #默认规则:把service id 直接映射为一个访问子路径 ,zuul可以从eureka获得服务注册信息,自动完成默认配置
+    user-service: /user-service/**   #但是还是最好自己写服务信息
+    order-service: /order-service/**
+  retryable: true  #启用重试    默认是不重试的
+  
+ #通用配置(所有服务都有效)
+ #ribbon:重试,负载均衡
+ribbon:
+  MaxAutoRetries: 1   #一台服务重试1次
+ 
+ 
+  #只针对商品服务的配置
+item-service:
+  ribbon:
+    MaxAutoRetreisNextServer: 2   #向后重试几台服务器
+       
+ # hystrix:降级,熔断     
+hystrix:
+    command:
+      default:
+       execution:
+         isolation:
+               thread:   ##默认连接服务器降级超时1秒(正常设置要根据ribbon来设置时间)
+                   timeoutInMilliseconds: 500 #降级超时时间,500毫秒还得不到响应就降级
+                   
+                   
+#http://localhost:3001/actuator暴露监控端点
+#actuator 是 spring boot 提供的服务监控工具，提供了各种监控信息的监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream   #可以指定端点名，来暴露监控端点,如果要暴露所有端点，可以用 “*”   
+      
+       
+       
+       
+       
+       
+       

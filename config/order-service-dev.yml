@@ -1,0 +1,35 @@
+spring:
+  application:  #订单模块
+    name: order-service   #服务名称
+  cloud:
+    config:
+      override-none: true  #设置禁止配置中心的配置将客户端配置覆盖掉
+server:
+  port: 8201   #端口号
+
+  #eureak服务(注册中心) 
+eureka:
+  client:     #客户端
+    service-url:  #服务地址
+        defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka            #这个地址只能有云服务商提供,除了在本机的就写在本机
+        
+        
+#手动启用hystrix
+feign:
+   hystrix:
+     enabled: true   
+hystrix:
+    command:
+      default:
+        execution:
+          isolation:
+                thread:
+                    timeoutInMilliseconds: 1000   #默认连接服务器降级超时1秒(正常设置要根据ribbon来设置时间)
+   
+#http://localhost:3001/actuator暴露监控端点
+##actuator 是 spring boot 提供的服务监控工具，提供了各种监控信息的监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream   #可以指定端点名，来暴露监控端点,如果要暴露所有端点，可以用 “*”
