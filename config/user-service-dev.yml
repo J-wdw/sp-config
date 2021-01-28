@@ -18,3 +18,10 @@ eureka:
   client:       #客户端
     service-url:     #服务地址
         defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka    #这个地址只能有云服务商提供,除了在本机的就写在本机 
+        
+  #spring cloud 允许运行时动态刷新配置，可以重新从配置中心获取新的配置信息      
+management:
+   endpoints:
+       web:
+       exposure:  #暴露 refresh 刷新端点
+         include: refresh        
