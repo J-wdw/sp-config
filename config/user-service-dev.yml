@@ -21,7 +21,7 @@ eureka:
         
   #spring cloud 允许运行时动态刷新配置，可以重新从配置中心获取新的配置信息      
 management:
-   endpoints:
-       web:
-       exposure:  #暴露 refresh 刷新端点
-         include: refresh        
+  endpoints:
+    web:
+      exposure:  #暴露 refresh 刷新端点
+        include: refresh        
