@@ -30,4 +30,6 @@ management:
   endpoints:
     web:
       exposure:  #暴露 refresh 刷新端点
-        include: refresh        
+        include: refresh 
+        
+                
