@@ -5,7 +5,7 @@ spring:
   cloud:
     config:
       override-none: true  #设置禁止配置中心的配置将客户端配置覆盖掉
-  rabbitmq:
+  rabbitmq:   #连接消息中间件,来接收刷新指令
    host: 192.168.64.140
    port: 5672
    username: admin
